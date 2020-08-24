@@ -1,4 +1,4 @@
-#Todo-list
+# Todo-list
 
 A todo list built with React. 
 Allows a user to:
@@ -9,21 +9,21 @@ Allows a user to:
 -Mark an item as completed
 -Filter the list by completed, pending, and all items
 
-##Installation
+## Installation
 
 use npm in the frontend folder to install
 ```bash
 npm install
 ```
 
-##usage
+## usage
 
 start development server with
 ```bash
 npm start
 ```
 
-##todo
+## todo
 
 -implement the backend for retrieving list data
 -connect frontend to backend
