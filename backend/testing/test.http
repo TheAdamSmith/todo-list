@@ -1,0 +1,27 @@
+post http://localhost:3001/api/todolist/ HTTP/1.1
+content-type: application/json
+
+{
+    "content": "build the api",
+    "completed": "true"
+
+}
+
+###
+
+get http://localhost:3001/api/todolist/ HTTP/1.1
+content-type: application/json
+
+###
+@id = 5f43d73d9b2bc620d64614be
+DELETE  http://localhost:3001/api/todolist/{{id}} HTTP/1.1
+
+###
+put http://localhost:3001/api/todolist/{{id}} HTTP/1.1
+content-type: application/json
+
+{
+    "content": "build the api",
+    "completed": "false"
+
+}

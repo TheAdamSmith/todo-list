@@ -5,7 +5,7 @@ import ListTodoItem from '../components/listtodoitem'
 import EditForm from '../components/editform'
 import AddForm from '../components/addform'
 
-import FilterDropDown from './FilterDropDown/index' 
+import FilterDropDown from './filterdropdown' 
 
 //a class for displaying and controlling the todolist
 //excepts a list for initialization
