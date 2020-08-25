@@ -1,9 +1,14 @@
 import React from 'react'
 
+//form to add a new item
+//props = item, handleNewItemChange, handleSubmit
 const AddForm = (props)  => {
-    
+   
+    const item = props.item;
     const handleChange = (event) => {
-      props.handleNewItemChange(event.target.value, props.index);
+      item.content = event.target.value;
+
+      props.handleNewItemChange(item);
     }
 
     const handleSubmit = (event) => {
@@ -15,8 +20,8 @@ const AddForm = (props)  => {
     return (
       <li>
       <form onSubmit={handleSubmit}>
-        <input value={props.content} onChange={handleChange}/>
-        <button type="submit">AddNew</button>
+        <input value={item.content} onChange={handleChange}/>
+        <button className="button" type="submit">AddNew</button>
       </form>
       </li>
     )

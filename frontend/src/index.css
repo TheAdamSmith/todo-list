@@ -11,3 +11,20 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.button {
+  background-color: #6c757d !important;
+  border-color: #6c757d !important;
+  font-size: 15px;
+  color: white;
+  margin: 5px;
+  display: inline-block;
+  border-radius: 0.25rem;
+
+}
+
+.todolistitem {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 20px;
+  margin: 0;
+}

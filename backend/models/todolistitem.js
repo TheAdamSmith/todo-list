@@ -17,7 +17,8 @@ const todoListItemSchema = new mongoose.Schema({
       type: String,
       required: true
   },
-  completed: Boolean
+  completed: Boolean,
+  edit: Boolean
 })
 
 //remove immutable fields and replace id

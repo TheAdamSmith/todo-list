@@ -35,7 +35,8 @@ app.post('/api/todolist/', (request, response, next) => {
 
   const toDoListItem = new ToDoListItem ( {
     content: body.content,
-    completed: body.completed || false
+    completed: body.completed || false,
+    edit: body.edit || false 
   })
 
   toDoListItem.save()
@@ -54,7 +55,8 @@ app.put('/api/todolist/:id', (request, response, next) => {
 
   const toDoListItem =  {
     content: body.content,
-    completed: body.completed || false
+    completed: body.completed || false,
+    edit: body.edit || false 
   }
 
   ToDoListItem.findByIdAndUpdate(request.params.id, toDoListItem, {new: true})

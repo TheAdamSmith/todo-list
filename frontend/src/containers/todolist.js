@@ -1,11 +1,15 @@
 import React from 'react'
-import nextId from 'react-id-generator'
 
+//components
 import ListTodoItem from '../components/listtodoitem'
 import EditForm from '../components/editform'
 import AddForm from '../components/addform'
 
+//containers
 import FilterDropDown from './filterdropdown' 
+
+//http services
+import ListService from '../services/listservice'
 
 //a class for displaying and controlling the todolist
 //excepts a list for initialization
@@ -20,15 +24,24 @@ class ToDoList extends React.Component {
       //empty item used to add new item
       const emptyNewItem = {content: '', 
         completed: false,
-        id:nextId()}
-
+        edit: false
+      }
+    
       this.state = {
-        list:props.list,//list of todo items
-        editFlag: new Array(props.list.length).fill(false), //flag to edit item
+        list:[],//list of todo items
         newItem: emptyNewItem,//empty item for adding a new item
         currFilter: this.filtOptions[0]//set the current filter to all
       };
-      
+
+      ListService
+      .getAll()
+      .then( returnedList => {
+        this.setState({list:returnedList})
+      })
+      .catch( error => {
+        throw error.response.data
+      })
+
       //listtodoitem button handlers
       this.handleEdit = this.handleEdit.bind(this);
       this.handleDelete = this.handleDelete.bind(this);
@@ -50,80 +63,87 @@ class ToDoList extends React.Component {
     }
   
     //list todoitem button handlers
-    handleEdit = (id) =>{
-      const index = this.state.list.findIndex(item =>(item.id ===id));
-
-      let tempEditFlag = this.state.editFlag;
-      tempEditFlag[index] = true;
-      this.setState({editFlag:tempEditFlag});
+    handleEdit = (editItem) =>{
+      editItem.edit = true;
+      this.setState({
+        list:this.state.list.map( item => item.id===editItem.id ? editItem : item)
+      });
     }
   
-    handleDelete = (id) => {
-      const index = this.state.list.findIndex(item =>(item.id ===id));
+    handleDelete = (delItem) => {
+      
+      ListService
+        .deleteItem(delItem.id)
+        .then(response =>{
+          this.setState({
+            list: this.state.list.filter(item => item.id !== delItem.id)
+          })
+        })
+        .catch(error =>{
+          throw error.response.data;
+        })
 
-      let tempEditFlag = this.state.editFlag;
-      let tempList = this.state.list;
-  
-      tempEditFlag.splice(index,1);
-      tempList.splice(index,1);
-  
-      this.setState({list:tempList,
-        editFlag:tempEditFlag});
     }
   
     //listtodoitem item completion handler
-    handleComplete = (id) =>{
-      const index = this.state.list.findIndex(item =>(item.id ===id));
+    handleComplete = (comItem) =>{
 
-      let tempList = this.state.list;
-      tempList[index].completed = !tempList[index].completed;
-
-      this.setState({list:tempList})
+      comItem.completed = !comItem.completed;
+      ListService
+        .update(comItem.id, comItem)
+        .then(returnedItem =>{
+          this.setState({
+            list: this.state.list.map(item => item.id === comItem.id ? returnedItem : item),
+          })
+        })
     }
     
     //editform item handlers
-    handleItemChange = (content, id) =>{
+    handleItemChange = (newItem) =>{
 
-      const index = this.state.list.findIndex(item =>(item.id ===id));
-  
-      let tempList = this.state.list;
-      tempList[index].content = content;
-  
-      this.setState({list:tempList})
+      this.setState({
+        list: this.state.list.map(item => item.id === newItem.id ? newItem : item)
+      })
+
     }
 
-    updateItem(id){
-      const index = this.state.list.findIndex(item =>(item.id ===id));
-  
-      let tempEditFlag = this.state.editFlag;
-      tempEditFlag[index]= false;
-  
-      this.setState({editFlag:tempEditFlag});
+    updateItem(newItem){
+      newItem.edit = false;
+
+      ListService
+        .update(newItem.id, newItem)
+        .then(returnedItem =>{
+          this.setState({
+            list: this.state.list.map(item => item.id === newItem.id ? returnedItem : item),
+          })
+        })
+
     }
     
     //addform item handlers
-    handleNewItemChange = (value) => {
-      let tempNewItem = this.state.newItem;
-      tempNewItem.content =value;
+    handleNewItemChange = (item) => {
 
-      this.setState({newItem: tempNewItem});
+      this.setState({newItem: item});
       
     }
     
     addNewItem = () => {
-      let tempList = this.state.list;
-      let tempNewItem = this.state.newItem;
 
-      tempList.push(tempNewItem);
-      tempNewItem = {
+      const emptyItem = {
         content: '',
         completed: false,
-        id:nextId()
-        }
-
-      this.setState({
-        list: tempList, 
-        newItem: tempNewItem})
+        edit: false
+      }
+      
+      ListService
+        .create(this.state.newItem)
+        .then(returnedItem => {
+          this.setState({
+            list: this.state.list.concat(returnedItem), 
+            newItem: emptyItem
+          })
+        })
+    
     }
 
     //filterdropdown filter handler
@@ -161,10 +181,10 @@ class ToDoList extends React.Component {
           />
           <ol>
             
-            {filterList.map( (item, index) =>(
+            {filterList.map( (item) =>(
               
               //only show edit form if flagged
-              this.state.editFlag[index] ?
+              item.edit ?
     
                 <EditForm 
                   key={item.id}
@@ -175,8 +195,7 @@ class ToDoList extends React.Component {
     
               :
                 <ListTodoItem 
-                  key={index} 
-                  index={index} 
+                  key={item.id} 
                   item={item} 
                   handleEdit={this.handleEdit} 
                   handleDelete={this.handleDelete}

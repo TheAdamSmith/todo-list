@@ -2,29 +2,31 @@ import React from 'react'
 import CheckBox from './checkbox'
 
 //list a todo item
-//props = itm, handleEdit, handleDelte, handleComplete
+//props = item, handleEdit, handleDelete, handleComplete
 const ListTodoItem = (props)  => {
+
 
   const item = props.item
 
   const handleEdit = () => {
-    props.handleEdit(item.id);
+    props.handleEdit(item);
   }
 
   const handleDelete = () => {
-    props.handleDelete(item.id);
+    props.handleDelete(item);
   }
 
   const handleComplete = () => {
-    props.handleComplete(item.id);
+    props.handleComplete(item);
   }
 
   return (
-    <li>
+    <li className="todolistitem">
       {item.content}
       <CheckBox checked={item.completed} onChange={handleComplete}/>
-      <button onClick={handleEdit}>edit</button>
-      <button onClick={handleDelete}>delete</button>
+      <br></br>
+      <button className="button" onClick={handleEdit}>edit</button>
+      <button className="button" onClick={handleDelete}>delete</button>
     </li>
   )
 }

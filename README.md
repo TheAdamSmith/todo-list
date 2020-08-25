@@ -43,7 +43,10 @@ npm run dev
 
 ~~-implement the backend for retrieving list data~~
 
--connect frontend to backend
+~~-connect frontend to backend~~
 
 ~~-connect backend to database to store list data~~
 
+-generate production build
+
+-deploy

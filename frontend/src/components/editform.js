@@ -5,19 +5,20 @@ const EditForm = (props)  => {
   const item = props.item  
 
   const handleChange = (event) => {
-    props.handleItemChange(event.target.value, item.id);
+    item.content = event.target.value;
+    props.handleItemChange(item);
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    props.updateItem(item.id);
+    props.updateItem(item);
   }
 
   return (
-    <li>
+    <li className="todolistitem">
     <form  onSubmit={handleSubmit}>
       <input value={item.content} onChange={handleChange}/>
-      <button type="submit">update</button>
+      <button className="button" type="submit">update</button>
     </form>
     </li>
   )
