@@ -21,7 +21,7 @@ const AddForm = (props)  => {
       <li>
       <form onSubmit={handleSubmit}>
         <input value={item.content} onChange={handleChange}/>
-        <button className="button" type="submit">AddNew</button>
+        <button className="button" type="submit">Add</button>
       </form>
       </li>
     )

@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
 //a dropdown menu for setting the filter
+//uses Dropdown from reacstrap
 const FilterDropDown = props => {
     const {currFilter, filtOptions, handleFilterChange} = props;
 

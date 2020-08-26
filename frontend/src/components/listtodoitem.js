@@ -19,13 +19,13 @@ const ListTodoItem = (props)  => {
   const handleComplete = () => {
     props.handleComplete(item);
   }
-
+  
   return (
     <li className="todolistitem">
-      {item.content}
       <CheckBox checked={item.completed} onChange={handleComplete}/>
+      {` ${item.content}`}
       <br></br>
-      <button className="button" onClick={handleEdit}>edit</button>
+      <button className="editbutton" onClick={handleEdit}>edit</button>
       <button className="button" onClick={handleDelete}>delete</button>
     </li>
   )

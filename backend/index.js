@@ -12,11 +12,11 @@ app.use(express.json())
 app.use(morgan('tiny'))
 app.disable('etag');
 
+app.use(express.static('build'))
 
 
-app.get('/', (request, response) => {
-    response.send('<h1>Hello World</h1>')
-})
+
+
 
 //retrieve and send entire list
 app.get('/api/todolist/', (request, response, next) =>{
@@ -100,6 +100,6 @@ const errorHandler = (error, request, response, next) => {
 
 app.use(errorHandler)
 
-const port = process.env.PORT
+const port = process.env.PORT || 3001
 app.listen(port)
 console.log(`Server running on port ${port}`)

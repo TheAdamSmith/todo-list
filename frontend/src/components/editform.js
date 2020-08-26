@@ -1,5 +1,8 @@
 import React from 'react'
 
+
+//form for editing items
+//props = item, handleItemChange, updateItem
 const EditForm = (props)  => {
 
   const item = props.item  

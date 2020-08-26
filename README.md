@@ -1,6 +1,8 @@
 # Todo-list
 
-A todo list built with React, Node, and MongoDB. 
+A todo list built with React, Express, and MongoDB. 
+
+[Deployed Application](https://adams-todo-list.herokuapp.com/)
 
 Allows a user to:
 
@@ -47,6 +49,6 @@ npm run dev
 
 ~~-connect backend to database to store list data~~
 
--generate production build
+~~-generate production build~~
 
--deploy
+~~-deploy~~

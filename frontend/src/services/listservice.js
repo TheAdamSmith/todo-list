@@ -1,6 +1,7 @@
 /*
 Service for communcation to the server
-Came from code wrtten for the fullstack web development course
+Came from code wrtten for the 
+University of Helsinki Open Fullstack Web Development course
 by: Matt Luukai
 */
 import axios from 'axios'
